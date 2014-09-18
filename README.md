@@ -21,8 +21,8 @@ grails {
 			/* Format the HTML or compress the output by removing unecessary whitespace. */
 			prettyPrint = true
 
-			/* Store the parsed template or reparse for every request. */
-			caching = true
+			/* Store the parsed template or reparse for every request. set true when production */
+			caching = false
 
 			/* Render exceptions in view or fail silently. */
 			renderExceptions = true
@@ -44,9 +44,14 @@ To add filtering for coffeescript you would need to add [coffeescript-jade-filte
 ##### BuildConfig.groovy #####
 
 ``` groovy
+repositories {
+  mavenRepo "https://raw.github.com/neuland/jade4j/master/releases/"
+  mavenRepo "https://raw.github.com/neuland/spring-jade4j/master/releases/"
+  mavenRepo "https://raw.github.com/neuland/jade4j-coffeescript-filter/master/releases/"        
+}
+
 dependencies {
-    compile('jade4j-coffeescript-filter:jade4j-coffeescript-filter:0.2.0',
-            'jcoffeescript:jcoffeescript:1.1')
+    compile('de.neuland:jade4j-coffeescript-filter:0.2.0', 'com.google.code.maven-play-plugin.com.github.yeungda.jcoffeescript:jcoffeescript:1.0')
     ...
 }
 ```
@@ -78,6 +83,28 @@ block content
         updateContent = -> document.getElementById('bodytext').innerHTML = 'Not Empty'
 
         do updateContent
+```
+
+##### grails template tags #####
+
+``` jade
+
+doctype html
+html
+  head
+    meta(http-equiv='http-equiv', content-type='Content-type', content='text/html; charset=utf-8')          
+    ${asset.stylesheet(src: 'style.css')}
+    title Mobile Mind
+      block title
+    
+    :coffeescript
+      
+      do_context = -> 
+        window.ContextPath = '${request.contextPath}'
+        window.ContextAssets = '${request.contextPath}/assets'
+
+      do do_context      
+
 ```
 
 ### Markdown Filter ###
