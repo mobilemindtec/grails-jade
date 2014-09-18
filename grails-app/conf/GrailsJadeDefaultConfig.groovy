@@ -5,7 +5,7 @@ grails {
 			prettyPrint = true
 
 			/* Store the parsed template or reparse for every request. */
-			caching = true
+			caching = false
 
 			/* Render exceptions in view or fail silently. */
 			renderExceptions = true
@@ -14,7 +14,7 @@ grails {
 			filters = [:]
 
 			/* Default objects available to all templates. */
-			sharedVariables = [:]
+			sharedVariables = [:] 
 		}
 	}
 }
